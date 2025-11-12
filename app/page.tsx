@@ -10,6 +10,12 @@ interface Prototype {
 // Add your prototypes here
 const prototypes: Prototype[] = [
   {
+    id: "plus-bottom-sheet-explorer",
+    title: "Plus Bottom Sheet Explorer",
+    description: "Interactive tool for exploring and configuring Careem Plus bottom sheet variations with real-time preview.",
+    tags: ["careem", "bottom-sheet", "explorer"],
+  },
+  {
     id: "example-prototype",
     title: "Example Prototype",
     description: "A template showing how to structure prototypes with components, animations, and mock data.",
