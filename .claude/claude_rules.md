@@ -209,6 +209,86 @@ Always consider mobile:
 </div>
 ```
 
+## Documentation Policy - CRITICAL
+
+### Keep Documentation Minimal and Consolidated
+The project should remain clean and self-documenting. **Avoid documentation sprawl.**
+
+### NEVER Create
+- ❌ Separate .md files for individual prototypes
+- ❌ docs/ folders or documentation directories
+- ❌ Extensive inline documentation for obvious code
+- ❌ README updates listing prototypes or features
+- ❌ CHANGELOG or similar tracking files
+- ❌ API documentation (there are no APIs)
+
+### How to Document Prototypes
+Each prototype is documented in **exactly 3 places**:
+
+1. **Gallery Entry** (`app/page.tsx`) - One clear sentence
+   ```typescript
+   {
+     id: "particle-field",
+     title: "Particle Field",
+     description: "Interactive particle system with mouse tracking and physics",
+     tags: ["animation", "canvas"]
+   }
+   ```
+
+2. **Page Header** (in the prototype's `page.tsx`) - Self-explanatory title
+   ```typescript
+   <h1>Particle Field</h1>
+   <p>Move your mouse to interact with particles</p>
+   ```
+
+3. **Code Comments** - Only for non-obvious logic
+   ```typescript
+   // Calculate velocity using Verlet integration for smooth physics
+   const velocity = position - previousPosition;
+   ```
+
+### Self-Documenting Code Principles
+- Use descriptive variable/function names instead of comments
+- TypeScript interfaces document data structures
+- Clear component names eliminate need for documentation
+- One-line comments for complex algorithms only
+
+### README.md
+- **Only for setup/deployment instructions**
+- Never list prototypes (the gallery page does this)
+- Never document features (code should be clear)
+- Only update if core project structure changes
+
+### Example: Good vs Bad
+
+✅ **GOOD:**
+```typescript
+// In gallery
+description: "Interactive particle system with mouse tracking"
+
+// In code - self-documenting
+interface Particle {
+  position: Vector2D;
+  velocity: Vector2D;
+  mass: number;
+}
+```
+
+❌ **BAD:**
+```
+Creating file: docs/particle-field.md
+# Particle Field Prototype
+
+## Overview
+This prototype demonstrates...
+
+## Features
+- Feature 1
+- Feature 2
+
+## Usage Instructions...
+```
+
 ## What NOT to Do
 
 ❌ Don't create API routes (use mock data)
@@ -219,6 +299,9 @@ Always consider mobile:
 ❌ Don't make prototypes depend on each other
 ❌ Don't use real API calls
 ❌ Don't add heavy dependencies without discussion
+❌ Don't create separate documentation files
+❌ Don't write extensive README updates
+❌ Don't document obvious code with comments
 
 ## File Naming Conventions
 - **Components**: `PascalCase.tsx` (e.g., `AnimatedCard.tsx`)

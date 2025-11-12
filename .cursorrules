@@ -130,6 +130,43 @@ export function AnimatedComponent() {
 }
 ```
 
+## Documentation Policy
+
+### Keep It Minimal
+- ❌ **DO NOT** create separate documentation files (.md, .txt, etc.) for prototypes
+- ❌ **DO NOT** create docs/ folders or extensive README updates
+- ✅ **DO** make code self-documenting with clear names and types
+- ✅ **DO** add brief comments for complex logic only
+- ✅ **DO** use descriptive gallery descriptions (one sentence max)
+
+### How to Document Prototypes
+1. **Gallery entry** (`app/page.tsx`): One clear sentence describing what it demonstrates
+2. **Page title/header**: Self-explanatory title and optional subtitle
+3. **Code comments**: Only for non-obvious logic or important notes
+4. **TypeScript types**: Well-named interfaces document the data structure
+5. **Component names**: Clear, descriptive names make docs unnecessary
+
+### Example (Good)
+```tsx
+// In app/page.tsx
+{
+  id: "particle-field",
+  title: "Particle Field",
+  description: "Interactive particle system with mouse tracking and physics",
+  tags: ["animation", "canvas"],
+}
+
+// In page.tsx - title is self-documenting
+<h1>Particle Field</h1>
+<p>Move your mouse to interact with particles</p>
+```
+
+### README.md
+- Keep focused on **setup and deployment** only
+- Don't list every prototype - the gallery page does that
+- Don't document features - the code should be clear
+- Update only if project structure changes fundamentally
+
 ## What to Avoid
 - ❌ Creating real API endpoints (use mock data)
 - ❌ Adding databases or auth (client-side only)
@@ -138,6 +175,9 @@ export function AnimatedComponent() {
 - ❌ Installing heavy libraries unnecessarily
 - ❌ Forgetting to update the gallery page
 - ❌ Using Tailwind v3 syntax (we're on v4)
+- ❌ Creating separate documentation files
+- ❌ Writing extensive comments for obvious code
+- ❌ Updating README with prototype lists or feature docs
 
 ## Deployment
 - Configured for Vercel (zero-config)
