@@ -22,7 +22,8 @@ app/
         ├── page.tsx        # Main prototype page (use "use client")
         ├── components/     # Prototype-specific components
         ├── lib/            # Prototype-specific utilities
-        └── mock-data.ts    # Mock data (no real APIs)
+        ├── mock-data.ts    # Mock data (no real APIs)
+        └── reference/      # Optional: Design references, screenshots, inspiration
 ```
 
 ## Key Principles

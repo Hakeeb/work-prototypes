@@ -8,7 +8,19 @@
       "Bash(npm run build:*)",
       "Bash(npm run dev:*)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Work prototypes playground\n\n- Next.js 16 with App Router and TypeScript\n- Tailwind CSS v4 with custom theme\n- Framer Motion for animations\n- shadcn/ui ready to use\n- Example prototype with animated cards\n- Gallery home page for prototype discovery\n- Claude and Cursor rules for project context\n- Complete README with deployment guide\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git commit:*)",
+      "Bash(brew install:*)",
+      "Bash(gh auth:*)",
+      "Bash(gh repo create:*)",
+      "Bash(vercel --version:*)",
+      "Bash(vercel --yes:*)",
+      "Bash(vercel login)",
+      "Bash(git push)",
+      "Bash(mkdir:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)"
     ],
     "deny": [],
     "ask": []

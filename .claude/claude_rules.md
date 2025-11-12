@@ -21,7 +21,8 @@ app/prototypes/[prototype-name]/
 ├── page.tsx           # Main page (must use "use client")
 ├── components/        # Local components only for this prototype
 ├── lib/              # Local utilities only for this prototype
-└── mock-data.ts      # Mock data (no real APIs)
+├── mock-data.ts      # Mock data (no real APIs)
+└── reference/        # Optional: Design references, screenshots, inspiration
 ```
 
 ### Gallery System

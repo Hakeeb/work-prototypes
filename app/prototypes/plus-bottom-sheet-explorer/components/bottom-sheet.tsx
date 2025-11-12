@@ -1,108 +1,218 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { BottomSheetConfig } from "../types";
+import { getIntensityStyles, getPlusLogoPath } from "../lib/theme";
+
+// Layer components
+import { HeaderVisual } from "./layers/content/HeaderVisual";
+import { HeroTitle } from "./layers/content/HeroTitle";
+import { Benefits } from "./layers/content/Benefits";
+import { Callout } from "./layers/content/Callout";
+import { Confetti } from "./layers/excitement/Confetti";
+import { FreeTrialDuration } from "./layers/plan/FreeTrialDuration";
+import { PlanType } from "./layers/plan/PlanType";
+import { CountdownTimer } from "./layers/urgency/CountdownTimer";
+import { EmbeddedPaySDK } from "./layers/payment/EmbeddedPaySDK";
+import { AddNewCard } from "./layers/payment/AddNewCard";
+import { SecurityInformation } from "./layers/payment/SecurityInformation";
 
 interface BottomSheetProps {
-  config: {
-    variant: string;
-    showHeader: boolean;
-    showAnimation: boolean;
-  };
+  config: BottomSheetConfig;
 }
 
 export function BottomSheet({ config }: BottomSheetProps) {
-  const getHeight = () => {
-    switch (config.variant) {
-      case "compact":
-        return "280px";
-      case "expanded":
-        return "520px";
-      default:
-        return "400px";
-    }
-  };
+  const intensityStyles = getIntensityStyles(
+    config.themingLayer.tier,
+    config.themingLayer.touchIntensity
+  );
 
-  const animationProps = config.showAnimation
-    ? {
-        initial: { y: "100%" },
-        animate: { y: 0 },
-        exit: { y: "100%" },
-        transition: { type: "spring", damping: 35, stiffness: 400 },
-      }
-    : {};
+  const logoPath = getPlusLogoPath(
+    config.themingLayer.tier,
+    config.themingLayer.touchIntensity === "high"
+  );
 
   return (
-    <AnimatePresence mode="wait">
+    <>
+      {/* Confetti Layer (renders above everything) */}
+      {config.excitementLayer.confetti?.enabled && (
+        <Confetti
+          trigger={config.excitementLayer.confetti.trigger}
+          active={config.excitementLayer.confetti.enabled}
+        />
+      )}
+
+      {/* Bottom Sheet Container */}
       <motion.div
-        key={`${config.variant}-${config.showHeader}-${config.showAnimation}`}
-        {...animationProps}
-        animate={{
-          ...animationProps.animate,
-          height: getHeight(),
-        }}
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "100%" }}
         transition={{
-          height: { type: "spring", damping: 35, stiffness: 400 },
-          ...animationProps.transition,
+          type: "spring",
+          damping: 35,
+          stiffness: 400,
         }}
-        className="bg-white dark:bg-zinc-950 rounded-t-[28px] shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.15)] dark:shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.4)] border-t border-x border-zinc-200/80 dark:border-zinc-800/80 overflow-hidden"
+        className="rounded-t-[28px] shadow-[0_-20px_60px_-15px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col"
+        style={{
+          background: intensityStyles.useGradient
+            ? intensityStyles.background
+            : undefined,
+          backgroundColor: !intensityStyles.useGradient
+            ? intensityStyles.background
+            : undefined,
+          fontFamily: "'Careem Sans', sans-serif",
+          maxHeight: "75vh",
+        }}
       >
         {/* Drag Handle */}
-        <div className="flex justify-center pt-3 pb-2">
-          <div className="w-9 h-1 bg-zinc-300 dark:bg-zinc-700 rounded-full" />
-        </div>
+        {config.showDragHandle && (
+          <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
+            <div className="w-9 h-1 bg-white/30 rounded-full" />
+          </div>
+        )}
 
-        {/* Header */}
-        <AnimatePresence>
-          {config.showHeader && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="px-6 py-4 border-b border-zinc-200/80 dark:border-zinc-800/80 overflow-hidden"
-            >
-              <h3 className="font-semibold text-[15px] text-zinc-900 dark:text-zinc-100 tracking-tight">
-                Careem Plus
-              </h3>
-              <p className="text-[12px] text-zinc-500 dark:text-zinc-500 mt-0.5">
-                Get more from your Careem experience
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Content Area - Placeholder */}
-        <div className="px-6 py-5 space-y-3">
-          <div className="space-y-2">
-            <div className="h-[52px] bg-zinc-900 dark:bg-zinc-100 rounded-[14px] flex items-center px-4">
-              <span className="text-white dark:text-zinc-900 text-[13px] font-medium">
-                Featured benefit
-              </span>
-            </div>
-            <div className="h-[52px] bg-zinc-100 dark:bg-zinc-900 rounded-[14px]" />
-            <div className="h-[52px] bg-zinc-100 dark:bg-zinc-900 rounded-[14px]" />
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto scrollbar-hide pb-24">
+          {/* Logo */}
+          <div className="px-6 pt-3 pb-2">
+            <Image
+              src={logoPath}
+              alt="Careem Plus"
+              width={60}
+              height={24}
+              className="h-6 w-auto"
+            />
           </div>
 
-          {config.variant === "expanded" && (
-            <div className="space-y-2 pt-3 border-t border-zinc-200/50 dark:border-zinc-800/50">
-              <div className="h-11 bg-zinc-50 dark:bg-zinc-900 rounded-[12px]" />
-              <div className="h-11 bg-zinc-50 dark:bg-zinc-900 rounded-[12px]" />
-              <div className="h-11 bg-zinc-50 dark:bg-zinc-900 rounded-[12px]" />
+          {/* Content Layer: Header Visual */}
+          {config.contentLayer.headerVisual && (
+            <HeaderVisual
+              type={config.contentLayer.headerVisual.type}
+              src={config.contentLayer.headerVisual.src}
+            />
+          )}
+
+          {/* Content Layer: Hero Title */}
+          {config.contentLayer.heroTitle && (
+            <HeroTitle
+              title={config.contentLayer.heroTitle}
+              subtitle={config.contentLayer.heroTitle ? undefined : undefined}
+              tier={config.themingLayer.tier}
+            />
+          )}
+
+          {/* Content Layer: Callout */}
+          {config.contentLayer.callout && (
+            <Callout
+              text={config.contentLayer.callout.text}
+              variant={config.contentLayer.callout.variant}
+            />
+          )}
+
+          {/* Plan Layer: Free Trial Duration */}
+          {config.planLayer.freeTrialDuration && (
+            <FreeTrialDuration
+              days={config.planLayer.freeTrialDuration.days}
+              highlight={config.planLayer.freeTrialDuration.highlight}
+            />
+          )}
+
+          {/* Content Layer: Benefits */}
+          {config.contentLayer.benefits && (
+            <Benefits
+              type={config.contentLayer.benefits.type}
+              items={config.contentLayer.benefits.items}
+              tier={config.themingLayer.tier}
+            />
+          )}
+
+          {/* Plan Layer: Plan Type */}
+          {config.planLayer.planType && (
+            <PlanType
+              name={config.planLayer.planType.name}
+              price={config.planLayer.planType.price}
+              currency={config.planLayer.planType.currency}
+              billingCycle={config.planLayer.planType.billingCycle}
+              features={config.planLayer.planType.features}
+              tier={config.themingLayer.tier}
+              showComparison={config.planLayer.planType.showComparison}
+              comparisonPrice={config.planLayer.planType.comparisonPrice}
+            />
+          )}
+
+          {/* Urgency Layer: Countdown Timer */}
+          {config.urgencyLayer.countdownTimer && (
+            <CountdownTimer
+              endTime={config.urgencyLayer.countdownTimer.endTime}
+              message={config.urgencyLayer.countdownTimer.message}
+            />
+          )}
+
+          {/* Payment Layer: Embedded PaySDK */}
+          {config.paymentLayer.embeddedPaySDK && (
+            <EmbeddedPaySDK
+              selectedMethod={config.paymentLayer.selectedPaymentMethod}
+            />
+          )}
+
+          {/* Payment Layer: Add New Card */}
+          {config.paymentLayer.addNewCard && (
+            <AddNewCard />
+          )}
+
+        </div>
+
+        {/* Fixed CTA Button at Bottom */}
+        <div className="flex-shrink-0 bg-gradient-to-t from-black/10 to-transparent pt-3 pb-6 px-6 absolute bottom-0 left-0 right-0 backdrop-blur-sm">
+          {/* Payment Layer: Security Information */}
+          {config.paymentLayer.securityInfo && (
+            <div className="mb-3">
+              <SecurityInformation
+                text={config.paymentLayer.securityInfo.text}
+                icons={config.paymentLayer.securityInfo.icons as ("shield" | "lock")[]}
+              />
             </div>
           )}
 
-          {/* CTA Button Placeholder */}
           <motion.button
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full h-[52px] bg-zinc-900 dark:bg-zinc-100 rounded-[14px] flex items-center justify-center cursor-pointer mt-5 shadow-sm"
+            className="w-full h-14 rounded-2xl flex items-center justify-center shadow-lg text-base transition-all"
+            style={{
+              backgroundColor: config.themingLayer.tier === "standard" ? "#00A699" : "#C4F54D",
+              color: config.themingLayer.tier === "standard" ? "#FFFFFF" : "#000000",
+            }}
           >
-            <span className="text-white dark:text-zinc-900 font-semibold text-[14px] tracking-tight">
-              Subscribe Now
-            </span>
+            {getCTAText(config.useCase)}
           </motion.button>
         </div>
+
+        <style jsx>{`
+          .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+          }
+          .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}</style>
       </motion.div>
-    </AnimatePresence>
+    </>
   );
+}
+
+function getCTAText(useCase: string): string {
+  switch (useCase) {
+    case "first-time-signup":
+      return "Try Careem Plus free";
+    case "cashback-redemption":
+      return "Unlock my د.إ 150 now";
+    case "monthly-to-annual":
+      return "Switch to annual & save";
+    case "standard-to-premium":
+      return "Upgrade to Premium";
+    default:
+      return "Subscribe now";
+  }
 }

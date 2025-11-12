@@ -2,13 +2,10 @@
 
 import { useState } from "react";
 import { BottomSheet } from "./bottom-sheet";
+import { BottomSheetConfig } from "../types";
 
 interface MobileCanvasProps {
-  config: {
-    variant: string;
-    showHeader: boolean;
-    showAnimation: boolean;
-  };
+  config: BottomSheetConfig;
 }
 
 export function MobileCanvas({ config }: MobileCanvasProps) {
