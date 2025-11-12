@@ -179,11 +179,29 @@ export function AnimatedComponent() {
 - ❌ Writing extensive comments for obvious code
 - ❌ Updating README with prototype lists or feature docs
 
-## Deployment
-- Configured for Vercel (zero-config)
-- Push to GitHub and connect to Vercel
-- Environment variables can be added in Vercel dashboard
-- Production URL: `/prototypes/[name]`
+## Deployment Workflow
+
+### Setup Complete
+- **GitHub**: https://github.com/Hakeeb/work-prototypes
+- **Vercel**: Auto-deploys on every push to main
+- **Production**: Live site updates automatically
+
+### Deploy a New Prototype (3 Steps)
+1. **Build locally** - Create prototype in `app/prototypes/[name]/`
+2. **Update gallery** - Add entry to `app/page.tsx`
+3. **Commit & push**:
+   ```bash
+   git add .
+   git commit -m "Add [prototype-name]"
+   git push
+   ```
+4. **Done!** - Vercel auto-deploys in ~30 seconds
+
+### Key Points
+- Every push triggers automatic deployment
+- Share URL with colleagues instantly: `/prototypes/[name]`
+- No manual deploy steps needed
+- Preview deployments for branches (if created)
 
 ## Adding shadcn/ui Components
 ```bash

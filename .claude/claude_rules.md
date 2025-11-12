@@ -316,11 +316,37 @@ The project is git-initialized with proper .gitignore:
 - .env files excluded
 - OS files (.DS_Store) excluded
 
-## Deployment
+## Deployment - Fully Automated
+
+### Current Setup
+- **GitHub Repo**: https://github.com/Hakeeb/work-prototypes
+- **Vercel**: Auto-deploys on every push to main branch
+- **Live Site**: Updates automatically within ~30 seconds of push
 - **Platform**: Vercel (zero-config for Next.js)
-- **Process**: Push to GitHub → Connect to Vercel → Auto-deploy
-- **URLs**: `https://[project].vercel.app/prototypes/[name]`
-- **Environment**: All client-side, no env vars needed by default
+
+### Deployment Workflow (Super Simple)
+When you complete a prototype:
+
+1. **Build locally** - Create the prototype
+2. **Update gallery** - Add to `app/page.tsx` array
+3. **Commit and push**:
+   ```bash
+   git add .
+   git commit -m "Add [prototype-name]"
+   git push
+   ```
+4. **Done!** - Vercel deploys automatically
+
+### Sharing with Colleagues
+- Production URL: `https://work-prototypes-[hash].vercel.app`
+- Prototype URL: `https://work-prototypes-[hash].vercel.app/prototypes/[name]`
+- Just copy and share - no additional steps needed
+
+### Key Points
+- Every push to main = automatic production deployment
+- No manual deploy commands needed
+- Preview deployments available for other branches
+- All client-side, no environment variables needed by default
 
 ## When Starting a New Session
 
