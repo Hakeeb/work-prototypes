@@ -1,0 +1,167 @@
+# Work Prototypes - Cursor Rules
+
+## Project Overview
+This is a Next.js-based playground for creating and sharing interactive work prototypes with colleagues. Each prototype is self-contained and focuses on demonstrating client-side behavior, animations, and UI interactions using mock data.
+
+## Tech Stack
+- **Next.js 16** (App Router, Turbopack)
+- **TypeScript** (strict mode)
+- **Tailwind CSS v4** (using @tailwindcss/postcss)
+- **Framer Motion** (for animations)
+- **shadcn/ui** (component library - add as needed)
+- **React 19**
+
+## Project Structure
+```
+app/
+├── layout.tsx              # Root layout with minimal nav
+├── page.tsx                # Home gallery listing all prototypes
+├── globals.css             # Tailwind v4 + CSS variables
+└── prototypes/
+    └── [prototype-name]/
+        ├── page.tsx        # Main prototype page (use "use client")
+        ├── components/     # Prototype-specific components
+        ├── lib/            # Prototype-specific utilities
+        └── mock-data.ts    # Mock data (no real APIs)
+```
+
+## Key Principles
+
+### 1. Prototype Isolation
+- Each prototype should be completely self-contained
+- Store components, styles, and data locally within the prototype folder
+- Avoid dependencies between prototypes
+- Only use shared components when absolutely necessary
+
+### 2. Client-Side Focus
+- Prototypes are primarily client-side interactive demos
+- Use `"use client"` directive in page.tsx
+- Mock all data - no real API calls needed
+- Focus on UX, animations, and interactivity
+
+### 3. Styling Guidelines
+- **Tailwind v4 syntax**: Use `@import "tailwindcss"` and `@theme` blocks
+- **CSS variables**: Defined in globals.css, use `var(--color-*)` format
+- **Local styles**: Prototype-specific styles should live with the prototype
+- **Shared styles**: Only for global theme tokens and base styles
+- Use `cn()` utility from `@/lib/utils` for className merging
+
+### 4. Creating New Prototypes
+When creating a new prototype:
+1. Create folder: `app/prototypes/[kebab-case-name]/`
+2. Add page.tsx with `"use client"`
+3. Create mock-data.ts if needed
+4. Build components in local `components/` folder
+5. **IMPORTANT**: Update `app/page.tsx` to add prototype to gallery:
+   ```tsx
+   const prototypes: Prototype[] = [
+     // ... existing
+     {
+       id: "new-prototype",
+       title: "New Prototype",
+       description: "What this demonstrates",
+       tags: ["tag1", "tag2"],
+     },
+   ];
+   ```
+
+## Code Style
+
+### TypeScript
+- Use TypeScript for everything
+- Define proper interfaces/types
+- Avoid `any` - use proper types or `unknown`
+- Export types from component files when reusable
+
+### Components
+- Use functional components with hooks
+- Prefer named exports for components
+- Use TypeScript interfaces for props
+- Keep components focused and single-purpose
+
+### Animations
+- Use Framer Motion for animations
+- Use consistent transition durations (0.2s, 0.3s, 0.5s)
+- Prefer `motion.div` over complex animation libraries
+- Consider performance - use `will-change` sparingly
+
+### File Naming
+- Components: `PascalCase.tsx` (e.g., `AnimatedCard.tsx`)
+- Utilities: `kebab-case.ts` (e.g., `format-date.ts`)
+- Mock data: `mock-data.ts` or `[feature]-data.ts`
+- Prototypes: `kebab-case` folder names
+
+## Common Patterns
+
+### Responsive Design
+- Mobile-first approach
+- Use Tailwind breakpoints: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`
+- Test on different screen sizes
+
+### Mock Data
+```typescript
+// Export typed mock data
+export interface DataItem {
+  id: string;
+  // ... other fields
+}
+
+export const mockData: DataItem[] = [
+  // ... data
+];
+```
+
+### Animated Components
+```typescript
+"use client";
+
+import { motion } from "framer-motion";
+
+export function AnimatedComponent() {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      {/* content */}
+    </motion.div>
+  );
+}
+```
+
+## What to Avoid
+- ❌ Creating real API endpoints (use mock data)
+- ❌ Adding databases or auth (client-side only)
+- ❌ Complex state management (keep it simple)
+- ❌ Shared state between prototypes
+- ❌ Installing heavy libraries unnecessarily
+- ❌ Forgetting to update the gallery page
+- ❌ Using Tailwind v3 syntax (we're on v4)
+
+## Deployment
+- Configured for Vercel (zero-config)
+- Push to GitHub and connect to Vercel
+- Environment variables can be added in Vercel dashboard
+- Production URL: `/prototypes/[name]`
+
+## Adding shadcn/ui Components
+```bash
+npx shadcn@latest add button
+npx shadcn@latest add card
+```
+Components will be added to `components/ui/`
+
+## Tailwind v4 Important Notes
+- Use `@import "tailwindcss"` not `@tailwind` directives
+- Define theme in `@theme {}` blocks
+- CSS variables use `--color-*` prefix
+- PostCSS plugin is `@tailwindcss/postcss`
+- Config file is minimal (just content paths)
+
+## When Starting a New Session
+1. Check `app/page.tsx` for existing prototypes
+2. Look at prototype structure in `app/prototypes/`
+3. Review this file for project conventions
+4. Ask about the specific prototype requirements
+5. Focus on clean, interactive, delightful UX
