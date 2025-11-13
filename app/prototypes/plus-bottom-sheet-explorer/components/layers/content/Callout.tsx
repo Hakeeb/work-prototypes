@@ -38,11 +38,11 @@ export function Callout({ text, variant }: CalloutProps) {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: 0.2 }}
-      className={`mx-6 my-3 p-3 rounded-xl ${style.bg} ${style.border} border backdrop-blur-sm flex items-center gap-3`}
+      className={`mx-6 my-3 px-4 py-3 rounded-xl ${style.bg} ${style.border} border backdrop-blur-md flex items-center gap-3 shadow-sm`}
     >
       <Icon className={`w-5 h-5 flex-shrink-0 ${style.text}`} />
       <p
-        className={`text-sm font-medium ${style.text}`}
+        className={`text-sm ${style.text}`}
         style={{ fontFamily: "'Careem Sans', sans-serif" }}
       >
         {text}

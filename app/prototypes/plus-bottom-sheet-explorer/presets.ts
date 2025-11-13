@@ -11,43 +11,21 @@ export const firstTimeSignupPreset: BottomSheetConfig = {
       type: "animated",
       src: "/assets/animations/welcome-video-lottie.json",
     },
-    heroTitle: "Join Plus and get د.إ 10 back right away",
+    heroTitle: "Join Plus and get\nد.إ 10 back right away",
     benefits: {
-      type: "multiple",
+      type: "single",
       items: [
         {
-          id: "rides",
-          icon: "/assets/images/service-rides.png",
-          title: "Unlimited free delivery",
-          service: "ON RIDES",
-          description: "No surge fees",
-        },
-        {
-          id: "food",
-          icon: "/assets/images/service-food.png",
-          title: "Free Express Delivery",
-          service: "ON FOOD",
-          description: "Get it faster",
-        },
-        {
-          id: "groceries",
-          icon: "/assets/images/service-groceries.png",
-          title: "Free delivery",
-          service: "ON GROCERIES",
-          description: "Save on every order",
-        },
-        {
-          id: "support",
-          icon: "/assets/images/service-support.png",
-          title: "Priority Support",
-          service: "ACROSS CAREEM",
-          description: "VIP treatment",
+          id: "save-everything",
+          icon: "/plus-baseline/benefit-icon.png",
+          title: "Save on everything",
+          description: "Enjoy benefits and discounts on rides, food, groceries and services",
         },
       ],
     },
     callout: {
-      text: "Limited-time offer ends upon arrival",
-      variant: "warning",
+      text: "Try free for 30 days. Cancel anytime.",
+      variant: "info",
     },
   },
 
@@ -112,21 +90,21 @@ export const cashbackRedemptionPreset: BottomSheetConfig = {
       type: "static",
       src: "/assets/images/card-image.png",
     },
-    heroTitle: "Unlock د.إ 150 waiting in your wallet",
+    heroTitle: "Unlock د.إ 150\nwaiting in your wallet",
     benefits: {
       type: "single",
       items: [
         {
           id: "cashback",
-          icon: "/assets/images/service-pay.png",
+          icon: "/plus-baseline/benefit-icon.png",
           title: "Instant cashback unlock",
           description: "Get your د.إ 150 credited immediately when you join Plus",
         },
       ],
     },
     callout: {
-      text: "You're saving د.إ 150 on this signup!",
-      variant: "success",
+      text: "Limited time offer. Claim before it expires.",
+      variant: "warning",
     },
   },
 
@@ -185,7 +163,7 @@ export const cashbackRedemptionPreset: BottomSheetConfig = {
 };
 
 // Preset 3: Monthly to Annual (Member)
-// Story: "You're smart. Be even smarter - save ৳500 this year"
+// Story: "You're smart. Be even smarter - save د.إ 500 this year"
 export const monthlyToAnnualPreset: BottomSheetConfig = {
   useCase: "monthly-to-annual",
   userState: "member",
@@ -195,21 +173,21 @@ export const monthlyToAnnualPreset: BottomSheetConfig = {
       type: "static",
       src: "/assets/images/food-hero-en@2x.png",
     },
-    heroTitle: "Save د.إ 500/year with annual billing",
+    heroTitle: "Save د.إ 500/year\nwith annual billing",
     benefits: {
       type: "single",
       items: [
         {
           id: "savings",
-          icon: "/assets/images/service-pay.png",
-          title: "2 months free",
-          description: "Pay for 10 months, get 12 months of Plus benefits",
+          icon: "/plus-baseline/benefit-icon.png",
+          title: "Get 2 months free",
+          description: "Pay for 10 months, enjoy 12 months of Plus benefits",
         },
       ],
     },
     callout: {
-      text: "Equivalent to getting 2 months completely free",
-      variant: "info",
+      text: "Lock in your savings. Upgrade offer ends in 7 days.",
+      variant: "warning",
     },
   },
 
@@ -272,37 +250,15 @@ export const standardToPremiumPreset: BottomSheetConfig = {
       type: "static",
       src: "/assets/images/quik-hero-en@3x.png",
     },
-    heroTitle: "Upgrade to Premium",
+    heroTitle: "Upgrade to\nPlus Premium",
     benefits: {
-      type: "multiple",
+      type: "single",
       items: [
         {
-          id: "priority",
-          icon: "/assets/images/service-rides.png",
-          title: "Priority matching",
-          service: "ON RIDES",
-          description: "Top-rated captains",
-        },
-        {
-          id: "exclusive",
-          icon: "/assets/images/service-shops.png",
-          title: "Exclusive deals",
-          service: "ON SHOPS",
-          description: "Premium discounts",
-        },
-        {
-          id: "concierge",
-          icon: "/assets/images/service-support.png",
-          title: "24/7 Concierge",
-          service: "PREMIUM SUPPORT",
-          description: "Dedicated team",
-        },
-        {
-          id: "luxury",
-          icon: "/assets/images/service-dineout.png",
-          title: "Luxury access",
-          service: "ON DINE-OUT",
-          description: "VIP reservations",
+          id: "premium-perks",
+          icon: "/plus-baseline/benefit-icon.png",
+          title: "Unlock premium perks",
+          description: "Priority matching, exclusive deals, 24/7 concierge, and VIP access",
         },
       ],
     },
@@ -358,8 +314,55 @@ export const standardToPremiumPreset: BottomSheetConfig = {
   showDragHandle: true,
 };
 
+// Preset 5: Figma Baseline (Exact Replication)
+// Node: 239-29418 from QBR Stories
+export const figmaBaselinePreset: BottomSheetConfig = {
+  useCase: "figma-baseline",
+  userState: "non-member",
+
+  contentLayer: {
+    headerVisual: {
+      type: "static",
+      src: "figma-assets",
+    },
+    heroTitle: "Join Plus and get\n⃎ 10 back right away",
+    benefits: {
+      type: "single",
+      items: [
+        {
+          id: "save-everything",
+          icon: "/plus-baseline/benefit-icon.png",
+          title: "Save on everything",
+          description: "Enjoy benefits and discounts on rides, food, groceries and services",
+        },
+      ],
+    },
+    callout: {
+      text: "Limited-time offer ends upon arrival",
+      variant: "warning",
+    },
+  },
+
+  excitementLayer: {},
+
+  planLayer: {},
+
+  urgencyLayer: {},
+
+  paymentLayer: {},
+
+  themingLayer: {
+    tier: "standard",
+    touchIntensity: "high",
+  },
+
+  isDismissible: true,
+  showDragHandle: true,
+};
+
 // Export all presets
 export const PRESETS = {
+  "figma-baseline": figmaBaselinePreset,
   "first-time-signup": firstTimeSignupPreset,
   "cashback-redemption": cashbackRedemptionPreset,
   "monthly-to-annual": monthlyToAnnualPreset,

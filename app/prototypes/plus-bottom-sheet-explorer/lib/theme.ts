@@ -3,31 +3,39 @@
 export type TierTheme = "standard" | "premium";
 export type TouchIntensity = "high" | "medium" | "low";
 
-// Color palette from Plus brand guidelines
+// Color palette from Plus brand guidelines (Figma accurate)
+// Source: Plus Rebrand test library (node 1793-179226)
 export const plusColors = {
-  // Standard Tier
+  // Standard Tier (Purple)
   standard: {
-    primary: "#3D2B6B", // Deep purple
-    primaryGradient: "linear-gradient(135deg, #3D2B6B 0%, #2B1F4F 100%)",
-    primaryInverse: "#FFFFFF",
-    secondary: "#D4C5F9", // Light lavender
-    secondaryGradient: "linear-gradient(135deg, #E8DFFF 0%, #D4C5F9 100%)",
+    primary: "#321B60", // Deep purple (Careem+ v2/Standard/Primary)
+    primaryGradient: "linear-gradient(135deg, #442576 0%, #321B60 100%)",
+    primaryInverse: "#FFFFFF", // White (Careem+ v2/Standard/Primary Inverse)
+    textSecondaryInverse: "#E8EBEA", // Light gray for secondary text (from baseline)
+    secondary: "#EDE8FD", // Light lavender (Careem+ v2/Standard/Secondary)
+    secondaryGradient: "linear-gradient(135deg, #F5F2FF 0%, #EDE8FD 100%)",
+    cardBackground: "rgba(255, 255, 255, 0.1)", // Semi-transparent white for benefit cards
+    cardBorder: "rgba(255, 255, 255, 0.1)",
   },
-  // Premium Tier
+  // Premium/Gold Tier
   premium: {
-    primary: "#000000", // Black
-    primaryGradient: "linear-gradient(135deg, #1A1A1A 0%, #000000 100%)",
-    primaryInverse: "#E5C9A1", // Tan/beige
-    secondary: "#F5E6D3", // Light tan
-    secondaryGradient: "linear-gradient(135deg, #F5E6D3 0%, #E5C9A1 100%)",
+    primary: "#000000", // Black (Careem+ v2/Gold/Primary)
+    primaryGradient: "linear-gradient(135deg, #1F1F1F 0%, #000000 100%)",
+    primaryInverse: "#F8D6A0", // Peach/gold (Careem+ v2/Gold/Primary Inverse)
+    textSecondaryInverse: "#E8EBEA", // Light gray for secondary text
+    secondary: "#F8D6A0", // Peach/gold (Careem+ v2/Gold/Secondary)
+    secondaryGradient: "linear-gradient(135deg, #FFE5B8 0%, #F8D6A0 100%)",
+    cardBackground: "rgba(248, 214, 160, 0.15)", // Semi-transparent gold for benefit cards
+    cardBorder: "rgba(248, 214, 160, 0.2)",
   },
   // System Colors (shared across tiers)
   system: {
-    promoGreen: "#C4F54D", // Bright lime
-    careemTeal: "#00A699", // Teal
-    careemTealInverse: "#003D37", // Dark teal
+    promoGreen: "#00E784", // Careem green (text/brand/careem)
+    careemTeal: "#00493E", // Careem Plus brand teal (background/brand/cPlus)
+    careemTealInverse: "#00E784", // Inverse is the bright green
     white: "#FFFFFF",
     black: "#000000",
+    textPrimary: "#232424", // Near black for text (text/primary)
   },
 };
 
@@ -82,7 +90,7 @@ export function getButtonStyles(tier: TierTheme, variant: "primary" | "secondary
     return {
       background: tier === "standard" ? colors.primary : colors.primary,
       text: tier === "standard" ? plusColors.system.white : plusColors.system.white,
-      hover: tier === "standard" ? "#2B1F4F" : "#1A1A1A",
+      hover: tier === "standard" ? "#2B1F4F" : "#1F1F1F",
     };
   } else {
     return {

@@ -8,8 +8,8 @@ import { BottomSheetConfig } from "./types";
 import "./fonts.css";
 
 export default function PlusBottomSheetExplorer() {
-  const [selectedPreset, setSelectedPreset] = useState<PresetKey>("first-time-signup");
-  const [config, setConfig] = useState<BottomSheetConfig>(PRESETS["first-time-signup"]);
+  const [selectedPreset, setSelectedPreset] = useState<PresetKey>("figma-baseline");
+  const [config, setConfig] = useState<BottomSheetConfig>(PRESETS["figma-baseline"]);
 
   const handlePresetChange = (preset: PresetKey) => {
     setSelectedPreset(preset);

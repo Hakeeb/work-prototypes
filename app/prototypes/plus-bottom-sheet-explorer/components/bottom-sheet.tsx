@@ -28,10 +28,12 @@ export function BottomSheet({ config }: BottomSheetProps) {
     config.themingLayer.touchIntensity
   );
 
-  const logoPath = getPlusLogoPath(
-    config.themingLayer.tier,
-    config.themingLayer.touchIntensity === "high"
-  );
+  const logoPath = config.useCase === "figma-baseline"
+    ? "/plus-baseline/plus-logo.svg"
+    : getPlusLogoPath(
+        config.themingLayer.tier,
+        config.themingLayer.touchIntensity === "high"
+      );
 
   return (
     <>
@@ -53,7 +55,7 @@ export function BottomSheet({ config }: BottomSheetProps) {
           damping: 35,
           stiffness: 400,
         }}
-        className="rounded-t-[28px] shadow-[0_-20px_60px_-15px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col"
+        className="rounded-t-[20px] shadow-[0_0_16px_0_rgba(0,0,0,0.08)] overflow-hidden flex flex-col"
         style={{
           background: intensityStyles.useGradient
             ? intensityStyles.background
@@ -62,28 +64,18 @@ export function BottomSheet({ config }: BottomSheetProps) {
             ? intensityStyles.background
             : undefined,
           fontFamily: "'Careem Sans', sans-serif",
-          maxHeight: "75vh",
+          maxHeight: "752px",
+          height: "auto",
         }}
       >
-        {/* Drag Handle */}
-        {config.showDragHandle && (
-          <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
-            <div className="w-9 h-1 bg-white/30 rounded-full" />
-          </div>
-        )}
-
-        {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto scrollbar-hide pb-24">
-          {/* Logo */}
-          <div className="px-6 pt-3 pb-2">
-            <Image
-              src={logoPath}
-              alt="Careem Plus"
-              width={60}
-              height={24}
-              className="h-6 w-auto"
-            />
-          </div>
+        {/* Navigation Container - contains grabber, hero, and logo */}
+        <div className="relative flex-shrink-0">
+          {/* Drag Handle */}
+          {config.showDragHandle && (
+            <div className="flex justify-center py-2 flex-shrink-0">
+              <div className="w-[48px] h-[4px] bg-white rounded-[2px]" />
+            </div>
+          )}
 
           {/* Content Layer: Header Visual */}
           {config.contentLayer.headerVisual && (
@@ -93,20 +85,39 @@ export function BottomSheet({ config }: BottomSheetProps) {
             />
           )}
 
+          {/* Logo positioned on top of hero */}
+          <div className="absolute top-0 left-4 right-4 pt-[16px] pb-[8px] flex justify-between items-center pointer-events-none">
+            <div className="w-[57px] h-[32px] relative">
+              <Image
+                src={logoPath}
+                alt="Careem Plus"
+                width={57}
+                height={32}
+                className="object-contain"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto scrollbar-hide pb-32 min-h-0"
+          >
+
+          {/* Urgency Layer: Countdown Timer (Badge variant renders before title) */}
+          {config.urgencyLayer.countdownTimer?.variant === "badge" && (
+            <CountdownTimer
+              endTime={config.urgencyLayer.countdownTimer.endTime}
+              message={config.urgencyLayer.countdownTimer.message}
+              variant="badge"
+            />
+          )}
+
           {/* Content Layer: Hero Title */}
           {config.contentLayer.heroTitle && (
             <HeroTitle
               title={config.contentLayer.heroTitle}
-              subtitle={config.contentLayer.heroTitle ? undefined : undefined}
+              subtitle={config.contentLayer.callout?.text}
               tier={config.themingLayer.tier}
-            />
-          )}
-
-          {/* Content Layer: Callout */}
-          {config.contentLayer.callout && (
-            <Callout
-              text={config.contentLayer.callout.text}
-              variant={config.contentLayer.callout.variant}
             />
           )}
 
@@ -141,11 +152,12 @@ export function BottomSheet({ config }: BottomSheetProps) {
             />
           )}
 
-          {/* Urgency Layer: Countdown Timer */}
-          {config.urgencyLayer.countdownTimer && (
+          {/* Urgency Layer: Countdown Timer (Full variant renders after benefits) */}
+          {config.urgencyLayer.countdownTimer && config.urgencyLayer.countdownTimer.variant !== "badge" && (
             <CountdownTimer
               endTime={config.urgencyLayer.countdownTimer.endTime}
               message={config.urgencyLayer.countdownTimer.message}
+              variant={config.urgencyLayer.countdownTimer.variant}
             />
           )}
 
@@ -163,29 +175,48 @@ export function BottomSheet({ config }: BottomSheetProps) {
 
         </div>
 
-        {/* Fixed CTA Button at Bottom */}
-        <div className="flex-shrink-0 bg-gradient-to-t from-black/10 to-transparent pt-3 pb-6 px-6 absolute bottom-0 left-0 right-0 backdrop-blur-sm">
-          {/* Payment Layer: Security Information */}
-          {config.paymentLayer.securityInfo && (
-            <div className="mb-3">
-              <SecurityInformation
-                text={config.paymentLayer.securityInfo.text}
-                icons={config.paymentLayer.securityInfo.icons as ("shield" | "lock")[]}
-              />
-            </div>
-          )}
+        {/* Footer */}
+        <div className="flex-shrink-0 bg-white shadow-[0_0_24px_0_rgba(0,0,0,0.16)] absolute bottom-0 left-0 right-0 overflow-hidden">
+          {/* Actions Container */}
+          <div className="px-4 py-3 flex gap-4 items-start">
+            <div className="flex-1 flex flex-col gap-2 items-start justify-center">
+              {/* Payment Layer: Security Information */}
+              {config.paymentLayer.securityInfo && (
+                <div className="mb-1">
+                  <SecurityInformation
+                    text={config.paymentLayer.securityInfo.text}
+                    icons={config.paymentLayer.securityInfo.icons as ("shield" | "lock")[]}
+                  />
+                </div>
+              )}
 
-          <motion.button
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full h-14 rounded-2xl flex items-center justify-center shadow-lg text-base transition-all"
-            style={{
-              backgroundColor: config.themingLayer.tier === "standard" ? "#00A699" : "#C4F54D",
-              color: config.themingLayer.tier === "standard" ? "#FFFFFF" : "#000000",
-            }}
-          >
-            {getCTAText(config.useCase)}
-          </motion.button>
+              {/* Main CTA Button */}
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full rounded-[8px] flex items-center justify-center border border-solid"
+                style={{
+                  backgroundColor: config.themingLayer.tier === "standard" ? "#321B60" : "#000000",
+                  borderColor: config.themingLayer.tier === "standard" ? "#321B60" : "#000000",
+                  color: "#FFFFFF",
+                  fontFamily: "'Careem Sans', sans-serif",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  lineHeight: "24px",
+                  padding: "16px 20px",
+                }}
+              >
+                {getCTAText(config.useCase)}
+              </motion.button>
+            </div>
+          </div>
+
+          {/* Home Indicator */}
+          <div className="flex flex-col gap-2 h-[24px] items-center justify-end">
+            <div className="h-[21px] relative w-full flex items-end justify-center">
+              <div className="bg-black h-[5px] rounded-[2.5px] w-[135px] mb-2" />
+            </div>
+          </div>
         </div>
 
         <style jsx>{`
@@ -204,6 +235,8 @@ export function BottomSheet({ config }: BottomSheetProps) {
 
 function getCTAText(useCase: string): string {
   switch (useCase) {
+    case "figma-baseline":
+      return "Try Careem Plus now";
     case "first-time-signup":
       return "Try Careem Plus free";
     case "cashback-redemption":

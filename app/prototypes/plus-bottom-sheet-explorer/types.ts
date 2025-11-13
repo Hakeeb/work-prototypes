@@ -6,6 +6,7 @@ export type { TierTheme, TouchIntensity };
 
 export type UserState = "non-member" | "member" | "premium-member";
 export type UseCase =
+  | "figma-baseline"
   | "first-time-signup"
   | "cashback-redemption"
   | "monthly-to-annual"
@@ -55,6 +56,8 @@ export interface PlanLayerConfig {
     currency: string;
     billingCycle: "monthly" | "annual";
     features: string[];
+    showComparison?: boolean;
+    comparisonPrice?: number;
   };
 }
 
@@ -62,6 +65,7 @@ export interface UrgencyLayerConfig {
   countdownTimer?: {
     endTime: Date;
     message: string;
+    variant?: "badge" | "full";
   };
 }
 

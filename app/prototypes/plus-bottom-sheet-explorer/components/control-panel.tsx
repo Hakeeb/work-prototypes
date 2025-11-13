@@ -263,6 +263,7 @@ function ToggleSwitch({ label, checked, onChange }: ToggleSwitchProps) {
 
 function getPresetLabel(key: PresetKey): string {
   const labels: Record<PresetKey, string> = {
+    "figma-baseline": "Figma Baseline",
     "first-time-signup": "First-Time Signup",
     "cashback-redemption": "Cashback Redemption",
     "monthly-to-annual": "Monthly → Annual",

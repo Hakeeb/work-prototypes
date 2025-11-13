@@ -7,6 +7,7 @@ import { Clock } from "lucide-react";
 interface CountdownTimerProps {
   endTime: Date;
   message: string;
+  variant?: "badge" | "full";
 }
 
 interface TimeLeft {
@@ -16,7 +17,7 @@ interface TimeLeft {
   seconds: number;
 }
 
-export function CountdownTimer({ endTime, message }: CountdownTimerProps) {
+export function CountdownTimer({ endTime, message, variant = "full" }: CountdownTimerProps) {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft());
 
   function calculateTimeLeft(): TimeLeft {
@@ -42,6 +43,29 @@ export function CountdownTimer({ endTime, message }: CountdownTimerProps) {
     return () => clearInterval(timer);
   }, [endTime]);
 
+  // Badge variant - simple pill like Figma
+  if (variant === "badge") {
+    return (
+      <div className="flex justify-center px-6 pb-2">
+        <motion.div
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.15 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-md"
+        >
+          <Clock className="w-4 h-4 text-red-600" strokeWidth={2.5} />
+          <p
+            className="text-red-600 text-sm font-semibold"
+            style={{ fontFamily: "'Careem Sans', sans-serif" }}
+          >
+            {message} {timeLeft.days} {timeLeft.days === 1 ? "day" : "days"}
+          </p>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Full variant - original design
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
